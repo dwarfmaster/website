@@ -1,0 +1,72 @@
+/***********************
+ *  Articles listing   *
+ ***********************/
+
+body
+{
+    background:#ddffdd;
+}
+
+.layout
+{
+    width:90%;
+    margin-right:auto;
+    margin-left:auto;
+    padding:auto;
+}
+
+.article
+{
+    background:#aaff88;
+    border-radius:1em;
+
+    padding:0.5%;
+    height:40em;
+    width:23%;
+    overflow:hidden;
+    margin-top:1em;
+    margin-bottom:1em;
+    margin-left:0.5%;
+    margin-right:0.5%;
+
+    float:left;
+}
+
+.article:hover
+{
+    background:#88ff44;
+}
+
+.article h1
+{
+    color:#3b5d14;
+    font-weight:bold;
+}
+
+.article h2
+{
+    color:#3b5d14;
+    font-weight:bold;
+}
+
+.article p
+{
+    color:#3b5d14;
+    font-weight:normal;
+    text-align:justify;
+    text-decoration:none;
+}
+
+.article a
+{
+    font-weight:bold;
+    text-decoration:none;
+    color:#3b5d14;
+}
+
+.article a:hover
+{
+    font-weight:bold;
+    text-decoration:underline;
+}
+
