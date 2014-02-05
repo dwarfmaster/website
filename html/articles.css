@@ -12,6 +12,7 @@ body
     width:90%;
     margin-right:auto;
     margin-left:auto;
+    margin-bottom:1em;
     padding:auto;
 }
 
@@ -89,9 +90,47 @@ body
     color:#3b5d14;
 }
 
-.article a:hover
+#navigation
 {
+    clear:both;
+}
+
+.nextpage
+{
+    display:block;
+    float:right;
+    margin-top:0.25em;
+    margin-bottom:1em;
+
+    font-size:16;
     font-weight:bold;
-    text-decoration:underline;
+    text-decoration:none;
+    color:#3b5d14;
+
+    background:#cceecc;
+    padding:1em;
+    border-radius:10px;
+}
+
+.prevpage
+{
+    display:block;
+    float:left;
+    margin-top:0.25em;
+    margin-bottom:1em;
+
+    font-size:16;
+    font-weight:bold;
+    text-decoration:none;
+    color:#3b5d14;
+
+    background:#cceecc;
+    padding:1em;
+    border-radius:10px;
+}
+
+.prevpage:hover, .nextpage:hover
+{
+    background:#bbddbb;
 }
 
