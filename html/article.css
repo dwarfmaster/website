@@ -1,0 +1,56 @@
+/***********************
+ *  Articles listing   *
+ ***********************/
+
+body
+{
+    background:#ddffdd;
+}
+
+#article
+{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:3em;
+    margin-bottom:3em;
+    width:50%;
+    line-height:1.5em;
+}
+
+.maintitle
+{
+    color:#3b5d14;
+    font-weight:bold;
+    font-size:24pt;
+    text-decoration:none;
+    font-style:normal;
+}
+
+.title
+{
+    color:#3b5d14;
+    font-weight:bold;
+    font-size:20pt;
+    text-decoration:none;
+
+    margin-left:1em;
+    margin-top:1em;
+    margin-bottom:0.5em;
+}
+
+.paragraph
+{
+    color:#3b5d14;
+    font-weight:normal;
+    text-align:justify;
+    text-decoration:none;
+    font-size:14pt;
+}
+
+.link
+{
+    font-weight:bold;
+    text-decoration:none;
+    color:#3b5d14;
+}
+
