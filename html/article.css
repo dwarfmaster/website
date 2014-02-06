@@ -54,3 +54,49 @@ body
     color:#3b5d14;
 }
 
+.figure
+{
+    text-align:center;
+    width:80%;
+    position:relative;
+
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:2em;
+    margin-bottom:2em;
+
+    background:#aaff88;
+    border-radius:15px;
+    padding:20px;
+}
+
+.picture
+{
+    width:100%;
+}
+
+.label
+{
+    text-align:center;
+    font-weight:bold;
+    font-size:16;
+    color:#3b5d14;
+
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:0.5em;
+    width:70%;
+}
+
+.figlink
+{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    text-decoration:none;
+    z-index:5;
+}
+
+
