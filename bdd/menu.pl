@@ -40,9 +40,9 @@ sub head {
     <title>Mon super blog !</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <style type="text/css">
-    @import url("../html/articles.css") all;
-    @import url("../html/menu.css") all;
-    @import url("../html/foot.css") all;
+    @import url("../style/articles.css") all;
+    @import url("../style/menu.css") all;
+    @import url("../style/foot.css") all;
     </style>
     <meta name="author" content="Luc Chabassier"/>
     <meta name="publisher" content="Mon super blog !"/>
