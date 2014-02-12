@@ -11,13 +11,14 @@ sub topbar {
 
 sub tagmiddlebar {
     print '<div id="middlebar">
+    <a href="menu.pl" class="middlelink"><span class="middlelink_span">All</span></a>
     ';
 
     (my $dbh) = @_;
     my $prep = $dbh->prepare('select * from tags;') or die $dbh->errstr();
     $prep->execute() or die 'Request failed !';
     while(my @row = $prep->fetchrow_array) {
-        print "<a href=\"tag.pl?id=$row[0]\" class=\"middlelink\"><span class=\"middlelink_span\">$row[1]</span></a>";
+        print "<a href=\"menu.pl?tag=$row[0]\" class=\"middlelink\"><span class=\"middlelink_span\">$row[1]</span></a>";
     }
     $prep->finish();
 
