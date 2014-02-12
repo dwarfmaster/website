@@ -5,6 +5,7 @@ use strict;
 use Encode;
 use utf8;
 use DBI;
+do 'common.pl';
 
 my $db     = 'blog';
 my $server = 'localhost';
@@ -18,7 +19,7 @@ my $dbh = DBI->connect("DBI:mysql:database=$db;host=$server;port=$port",
 ) or die "Couldn't connect to database $db : $DBI::errstr";
 
 # HTML
-head();
+head($dbh);
 
 # Get all articles
 my $prep = $dbh->prepare('select * from articles;') or die $dbh->errstr();
@@ -59,18 +60,12 @@ sub head {
     </head>
     <body>
     <!-- Menus -->
-    <div id="topbar">
-    <a href="menu.html#INDEX"class="toplink"><span>Index</span></a>
-    <a href="menu.html#BlOG" class="toplink_active"><span class="toplink_activespan">Blog</span></a>
-    <a href="menu.html#CODES" class="toplink"><span>Codes</span></a>
-    <a href="menu.html#PICTURES"class="toplink"><span>Pictures</span></a>
-    </div>
-    <div id="middlebar">
-    <a href="menu.html#SUBALL" class="middlelink"><span class="middlelink_span">All</span></a>
-    <a href="menu.html#SUBTAGS" class="middlelink"><span class="middlelink_span">Tags</span></a>
-    <a href="menu.html#BUGS" class="middlelink"><span class="middlelink_span">Bugs</span></a>
-    </div>
-    <div class="layout">
+    ';
+
+    topbar();
+    tagmiddlebar(@_);
+
+    print '<div class="layout">
     ';
 }
 
