@@ -21,21 +21,47 @@ my $dbh = DBI->connect("DBI:mysql:database=$db;host=$server;port=$port",
 # HTML
 head($dbh);
 
+my $sql_command = 'select path,date from articles';
+
+# Get max date
+my $query_string = $ENV{'QUERY_STRING'};
+$query_string = "" if not $query_string;
+my $date=undef;
+if($query_string =~ m/date=([0-9]{4}-[0-9]{2}-[0-9]{2}%20[0-9]{2}:[0-9]{2}:[0-9]{2})/) {
+    $date=$1;
+    $date =~ s/%20/ /g;
+    $sql_command .= " where date < \"$date\"";
+}
+
+my $prev_max=undef;
+$prev_max=" " if $query_string =~ m/prev=/;
+if($query_string =~ m/prev=([0-9]{4}-[0-9]{2}-[0-9]{2}%20[0-9]{2}:[0-9]{2}:[0-9]{2})/) {
+    my $prev_max=$1;
+    $prev_max =~ s/%20/ /g if $prev_max;
+}
+
 # Get all articles
-my $prep = $dbh->prepare('select * from articles;') or die $dbh->errstr();
+$sql_command .= " order by date desc limit 6;";
+my $prep = $dbh->prepare($sql_command) or die $dbh->errstr();
 $prep->execute() or die 'Request failed !';
+
+my $last_date="";
+my $nb=0;
 while(my @row = $prep->fetchrow_array) {
-    article($row[1]);
+    ++$nb;
+    article($row[0]);
+    $last_date=$row[1];
 }
 $prep->finish();
 
-footing();
+footing($nb, $prev_max, $last_date, $date);
 
 # Disconnecting
 $dbh->disconnect();
 
 sub head {
     print "Content-type: text/html\n\n";
+
     print '<!DOCTYPE html>
     <html>
     <head>
@@ -71,6 +97,23 @@ sub head {
 }
 
 sub footing {
+    my ($nb, $prev, $next, $date) = @_;
+    if($prev or $nb == 6) {
+        print '<div id="navigation">';
+        if($prev) {
+            print "  <a class=\"prevpage\" href=\"menu.cgi\"> < Prev page </a>" if $prev == " ";
+            print "  <a class=\"prevpage\" href=\"menu.cgi?date=$prev\"> < Prev page </a>" if $prev != " ";
+        }
+
+        if($nb == 6) {
+            print "  <a class=\"nextpage\" href=\"menu.cgi?date=$next";
+            print "&prev=$date" if $date;
+            print "&prev=" if not $date;
+            print "\"> Next page > </a>";
+        }
+        print '</div>';
+    }
+
     print '</div>
     <!-- Foot -->
     <div id="footbar">
