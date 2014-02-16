@@ -5,7 +5,7 @@ use strict;
 use Encode;
 use utf8;
 use DBI;
-do 'common.pl';
+do '../utils/common.pl';
 
 my $db     = 'blog';
 my $server = 'localhost';
