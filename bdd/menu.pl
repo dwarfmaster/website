@@ -35,6 +35,7 @@ footing();
 $dbh->disconnect();
 
 sub head {
+    print "Content-type: text/html\n\n";
     print '<!DOCTYPE html>
     <html>
     <head>
