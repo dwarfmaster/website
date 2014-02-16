@@ -40,6 +40,15 @@ if($query_string =~ m/prev=([0-9]{4}-[0-9]{2}-[0-9]{2}%20[0-9]{2}:[0-9]{2}:[0-9]
     $prev_max =~ s/%20/ /g if $prev_max;
 }
 
+# Get tag
+my $tag = undef;
+if($query_string =~ m/tag=([a-z]*)/) {
+    $sql_command .= " and" if $date;
+    $sql_command .= " where" if not $date;
+    $sql_command .= " tags regexp \"#$1\"";
+    $tag = $1;
+}
+
 # Get all articles
 $sql_command .= " order by date desc limit 6;";
 my $prep = $dbh->prepare($sql_command) or die $dbh->errstr();
@@ -54,7 +63,7 @@ while(my @row = $prep->fetchrow_array) {
 }
 $prep->finish();
 
-footing($nb, $prev_max, $last_date, $date);
+footing($nb, $prev_max, $last_date, $date, $tag);
 
 # Disconnecting
 $dbh->disconnect();
@@ -97,18 +106,26 @@ sub head {
 }
 
 sub footing {
-    my ($nb, $prev, $next, $date) = @_;
+    my ($nb, $prev, $next, $date, $tag) = @_;
     if($prev or $nb == 6) {
         print '<div id="navigation">';
         if($prev) {
-            print "  <a class=\"prevpage\" href=\"menu.cgi\"> < Prev page </a>" if $prev == " ";
-            print "  <a class=\"prevpage\" href=\"menu.cgi?date=$prev\"> < Prev page </a>" if $prev != " ";
+            if($prev == " ") {
+                print "  <a class=\"prevpage\" href=\"menu.cgi";
+                print "?tag=$tag" if $tag;
+                print "\"> < Prev page </a>";
+            } else {
+                print "  <a class=\"prevpage\" href=\"menu.cgi?date=$prev";
+                print "&tag=$tag" if $tag;
+                print "\"> < Prev page </a>" if $prev != " ";
+            }
         }
 
         if($nb == 6) {
             print "  <a class=\"nextpage\" href=\"menu.cgi?date=$next";
             print "&prev=$date" if $date;
             print "&prev=" if not $date;
+            print "&tag=$tag" if $tag;
             print "\"> Next page > </a>";
         }
         print '</div>';
