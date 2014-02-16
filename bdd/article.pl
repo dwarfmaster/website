@@ -45,6 +45,15 @@ if(scalar(@tags) > 0) {
 print "<div id=\"article\">\n";
 print while(<FD>);
 close FD;
+
+$query_string =~ s/id=[0-9]+//g;
+my @args = grep $_,split('&', $query_string);
+print "<div id=\"navigation\"><a class=\"prevpage\" href=\"menu.cgi";
+if(scalar(@args) > 0) {
+    print "?" . shift(@args);
+    print "&$_" foreach @args;
+}
+print "\">< Back to menu</a></div>\n";
 print "</div>\n";
 
 footing();

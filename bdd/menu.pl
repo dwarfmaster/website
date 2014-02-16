@@ -49,6 +49,10 @@ if($query_string =~ m/tag=([a-z]*)/) {
     $tag = $1;
 }
 
+# Get args
+my $args = undef;
+$args = $query_string if $query_string;
+
 # Get all articles
 $sql_command .= " order by date desc limit 6;";
 my $prep = $dbh->prepare($sql_command) or die $dbh->errstr();
@@ -58,7 +62,7 @@ my $last_date="";
 my $nb=0;
 while(my @row = $prep->fetchrow_array) {
     ++$nb;
-    article($row[1], $row[0]);
+    article($row[1], $row[0], $args);
     $last_date=$row[2];
 }
 $prep->finish();
@@ -141,10 +145,12 @@ sub footing {
 }
 
 sub article {
-    my ($path, $id) = @_;
+    my ($path, $id, $args) = @_;
     open FD, $path or die "Couldn't open file $path.";
     binmode FD;
-    my $content = "<a class=\"artlink\" href=\"article.cgi?id=$id\"></a>\n";
+    my $content = "<a class=\"artlink\" href=\"article.cgi?id=$id";
+    $content .= "&$args" if $args;
+    $content .= "\"></a>\n";
     while(<FD>) {
         $content .= $_;
     }
