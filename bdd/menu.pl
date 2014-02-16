@@ -21,7 +21,7 @@ my $dbh = DBI->connect("DBI:mysql:database=$db;host=$server;port=$port",
 # HTML
 head($dbh);
 
-my $sql_command = 'select path,date from articles';
+my $sql_command = 'select id,path,date from articles';
 
 # Get max date
 my $query_string = $ENV{'QUERY_STRING'};
@@ -58,8 +58,8 @@ my $last_date="";
 my $nb=0;
 while(my @row = $prep->fetchrow_array) {
     ++$nb;
-    article($row[0]);
-    $last_date=$row[1];
+    article($row[1], $row[0]);
+    $last_date=$row[2];
 }
 $prep->finish();
 
@@ -141,10 +141,10 @@ sub footing {
 }
 
 sub article {
-    (my $path) = @_;
+    my ($path, $id) = @_;
     open FD, $path or die "Couldn't open file $path.";
     binmode FD;
-    my $content = "";
+    my $content = "<a class=\"artlink\" href=\"article.cgi?id=$id\"></a>\n";
     while(<FD>) {
         $content .= $_;
     }
