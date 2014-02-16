@@ -1,10 +1,10 @@
 
 sub topbar {
     print '<div id="topbar">
-    <a href="/index.cgi"class="toplink"><span>Index</span></a>
-    <a href="/blog/menu.cgi" class="toplink_active"><span class="toplink_activespan">Blog</span></a>
-    <a href="/codes/index.cgi" class="toplink"><span>Codes</span></a>
-    <a href="/gallery/index.cgi"class="toplink"><span>Gallery</span></a>
+    <a href="/"class="toplink"><span>Index</span></a>
+    <a href="/blog/" class="toplink_active"><span class="toplink_activespan">Blog</span></a>
+    <a href="/codes/" class="toplink"><span>Codes</span></a>
+    <a href="/gallery/"class="toplink"><span>Gallery</span></a>
     </div>
     ';
 }
