@@ -13,7 +13,7 @@
     clear:both;
 }
 
-.maintitle
+h1
 {
     color:#3b5d14;
     font-weight:bold;
@@ -22,7 +22,7 @@
     font-style:normal;
 }
 
-.title
+h2
 {
     color:#3b5d14;
     font-weight:bold;
@@ -34,7 +34,7 @@
     margin-bottom:0.5em;
 }
 
-.paragraph
+p
 {
     color:#3b5d14;
     font-weight:normal;
@@ -43,7 +43,7 @@
     font-size:14pt;
 }
 
-.link
+a
 {
     font-weight:bold;
     text-decoration:none;
