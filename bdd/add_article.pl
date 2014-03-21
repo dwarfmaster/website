@@ -35,7 +35,7 @@ my $sqldate = sprintf qq{%04d-%02d-%02d %02d:%02d:%02d}, $year, $month, $day, $h
 print "Article added with date $sqldate.\n";
 
 # Saving the article.
-my $id = "$year$month$day-$hour$min$sec";
+my $id = "$year$month$day$hour$min$sec";
 $path = "$artdir/$id.html";
 `mv /tmp/art.html $path`;
 
