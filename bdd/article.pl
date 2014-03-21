@@ -2,40 +2,26 @@
 
 use warnings;
 use strict;
-use Encode;
-use utf8;
-use DBI;
+use Search::Xapian;
 do '../utils/common.pl';
+my $dbdir  = "/home/luc/Log/programmation/server/blog/xapian";
 
-my $db     = 'blog';
-my $server = 'localhost';
-my $id     = 'luc';
-my $pwd    = 'PwD';
-my $port   = '';
-
-# Connecting
-my $dbh = DBI->connect("DBI:mysql:database=$db;host=$server;port=$port",
-    $id, $pwd, { RaiseError => 1, }
-) or die "Couldn't connect to database $db : $DBI::errstr";
-
-
+# Getting th article content.
 my $query_string = $ENV{'QUERY_STRING'} or die "Argument necessary.";
 $query_string =~ m/id=([0-9]+)/ or die "Argument necessary.";
-my $sql_command = "select path,tags from articles where id=$1";
-my $prep = $dbh->prepare($sql_command) or die $dbh->errstr();
-$prep->execute() or die 'Request failed !';
+my $id = $1;
+my $db = Search::Xapian::Database->new($dbdir) or die "Couldn't open database";
+#my $doc = $db->get_document($id) or die "Couldn't get document";
+my $doc = $db->get_document(1) or die "Couldn't get document";
 
-my @row = $prep->fetchrow_array;
-my @tags = split('#', $row[1]);
-
-open FD, $row[0] or die "Couldn't open path.";
+my $path = $doc->get_data();
+open FD, $path or die "Couldn't open path.";
 binmode FD;
 
-$prep->finish();
-
 # HTML
-head($dbh);
+head();
 
+my @tags; # TODO Handle tags.
 if(scalar(@tags) > 0) {
     print "<div id=\"tags\">\n";
     print "  <a class=\"tag\" href=\"menu.cgi?tag=$_\">$_</a>\n" while(shift(@tags));
@@ -57,9 +43,6 @@ print "\">< Back to menu</a></div>\n";
 print "</div>\n";
 
 footing();
-
-# Disconnecting
-$dbh->disconnect();
 
 sub head {
     print "Content-type: text/html\n\n";

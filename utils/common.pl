@@ -14,13 +14,10 @@ sub tagmiddlebar {
     <a href="menu.cgi" class="middlelink"><span class="middlelink_span">All</span></a>
     ';
 
-    (my $dbh) = @_;
-    my $prep = $dbh->prepare('select name from tags;') or die $dbh->errstr();
-    $prep->execute() or die 'Request failed !';
-    while(my @row = $prep->fetchrow_array) {
-        print "<a href=\"menu.cgi?tag=$row[0]\" class=\"middlelink\"><span class=\"middlelink_span\">$row[0]</span></a>";
-    }
-    $prep->finish();
+    (my $db) = @_;
+    # while(my @row = $prep->fetchrow_array) {
+    #    print "<a href=\"menu.cgi?tag=$row[0]\" class=\"middlelink\"><span class=\"middlelink_span\">$row[0]</span></a>";
+    #}
 
     print '</div
     ';
