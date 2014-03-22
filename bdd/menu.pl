@@ -10,7 +10,7 @@ my $dbdir = "/home/luc/Log/programmation/server/blog/xapian";
 my $db = Search::Xapian::Database->new($dbdir) or die "Couldn't open database.";
 
 # HTML
-head();
+head($db);
 
 # Get arguments
 my $query_string = $ENV{'QUERY_STRING'};
