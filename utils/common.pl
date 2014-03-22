@@ -11,6 +11,7 @@ sub topbar {
 
 sub tagmiddlebar {
     print '<div id="middlebar">';
+    print "<a href=\"menu.cgi\" class=\"middlelink\"><span class=\"middlelink_span\">All</span></a>\n" if tag ne "all";
 
     (my $db) = @_;
     my $it = $db->allterms_begin("T");
@@ -19,7 +20,7 @@ sub tagmiddlebar {
         $it->get_termname =~ m/^T(.*)$/;
         my $tag = $1;
         my $tag_name = ucfirst $tag;
-        print "<a href=\"menu.cgi?query=tag:$tag\" class=\"middlelink\"><span class=\"middlelink_span\">$tag_name</span></a>\n";
+        print "<a href=\"menu.cgi?query=tag:$tag\" class=\"middlelink\"><span class=\"middlelink_span\">$tag_name</span></a>\n" if $tag ne "all";
         ++$it;
     }
 
