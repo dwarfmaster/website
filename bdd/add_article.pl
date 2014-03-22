@@ -25,7 +25,7 @@ push @tags,"all";
 my $tags_str = join ' ',@tags;
 print "Tags used : $tags_str.\n";
 # Creating the html
-`cat $path | ./preproc.pl | txt2tags --encoding=UTF-8 --no-rc --no-toc --no-headers --css-sugar -t html --outfile /tmp/art.html --infile -`;
+`cat $path | ./preproc.pl | txt2tags --encoding=UTF-8 --no-rc --no-toc --no-headers --css-sugar -t xhtml --outfile /tmp/art.html --infile -`;
 # Extracting the text to index.
 my $content = `txt2tags --encoding=UTF-8 --no-rc --no-toc --no-headers -t txt --outfile - $path`;
 
