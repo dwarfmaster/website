@@ -11,8 +11,7 @@ my $query_string = $ENV{'QUERY_STRING'} or die "Argument necessary.";
 $query_string =~ m/id=([0-9]+)/ or die "Argument necessary.";
 my $id = $1;
 my $db = Search::Xapian::Database->new($dbdir) or die "Couldn't open database";
-#my $doc = $db->get_document($id) or die "Couldn't get document";
-my $doc = $db->get_document(1) or die "Couldn't get document";
+my $doc = $db->get_document($id) or die "Couldn't get document";
 
 my $path = $doc->get_data();
 open FD, $path or die "Couldn't open path.";
