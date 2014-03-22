@@ -10,16 +10,19 @@ sub topbar {
 }
 
 sub tagmiddlebar {
-    print '<div id="middlebar">
-    <a href="menu.cgi" class="middlelink"><span class="middlelink_span">All</span></a>
-    ';
+    print '<div id="middlebar">';
 
     (my $db) = @_;
-    # while(my @row = $prep->fetchrow_array) {
-    #    print "<a href=\"menu.cgi?tag=$row[0]\" class=\"middlelink\"><span class=\"middlelink_span\">$row[0]</span></a>";
-    #}
+    my $it = $db->allterms_begin("T");
+    my $end = $db->allterms_end("T");
+    while($it ne $end) {
+        $it->get_termname =~ m/^T(.*)$/;
+        my $tag = $1;
+        my $tag_name = ucfirst $tag;
+        print "<a href=\"menu.cgi?query=tag:$tag\" class=\"middlelink\"><span class=\"middlelink_span\">$tag_name</span></a>\n";
+        ++$it;
+    }
 
-    print '</div>
-    ';
+    print "</div>\n";
 }
 
