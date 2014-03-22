@@ -21,6 +21,7 @@ die "Couldn't open the xapian database : $@" if $@;
 my ($path,@tags) = @ARGV;
 die "You must specifie an article" if not $path;
 die "You must specifie at least one tag" if scalar(@tags) == 0;
+push @tags,"all";
 my $tags_str = join ' ',@tags;
 print "Tags used : $tags_str.\n";
 # Creating the html
