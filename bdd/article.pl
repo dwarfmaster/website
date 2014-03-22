@@ -20,10 +20,14 @@ binmode FD;
 # HTML
 head($db);
 
-my @tags; # TODO Handle tags.
+my @tags = documenttags($db, $id);
 if(scalar(@tags) > 0) {
     print "<div id=\"tags\">\n";
-    print "  <a class=\"tag\" href=\"menu.cgi?tag=$_\">$_</a>\n" while(shift(@tags));
+    my $tag;
+    while($tag = shift(@tags)) {
+        my $pr = ucfirst $tag;
+        print "  <a class=\"tag\" href=\"menu.cgi?query=tag:$tag\">$pr</a>\n";
+    }
     print "</div>\n";
 }
 

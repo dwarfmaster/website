@@ -26,3 +26,20 @@ sub tagmiddlebar {
     print "</div>\n";
 }
 
+sub documenttags {
+    my ($db, $docid) = @_;
+    my @tags;
+
+    my $it = $db->termlist_begin($docid);
+    my $end = $db->termlist_end($docid);
+    while($it ne $end) {
+        if($it->get_termname() =~ m/^T([a-z]+)/) {
+            my $tag = $1;
+            push @tags, $tag if $tag ne "all";
+        }
+        ++$it;
+    }
+
+    return @tags;
+}
+
