@@ -19,7 +19,7 @@ open FD, $path or die "Couldn't open path.";
 binmode FD;
 
 # HTML
-head();
+head($db);
 
 my @tags; # TODO Handle tags.
 if(scalar(@tags) > 0) {
