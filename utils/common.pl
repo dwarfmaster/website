@@ -19,7 +19,7 @@ sub tagmiddlebar {
     #    print "<a href=\"menu.cgi?tag=$row[0]\" class=\"middlelink\"><span class=\"middlelink_span\">$row[0]</span></a>";
     #}
 
-    print '</div
+    print '</div>
     ';
 }
 
