@@ -9,6 +9,7 @@ $dbname = "blog"
 $artdir = "/home/luc/Log/programmation/ruby/blog/articles"
 
 def head
+    # Header
     print <<END_OF_STRING
 Content-type: text/html
 
@@ -36,6 +37,17 @@ Content-type: text/html
 </head>
 <body>
 END_OF_STRING
+    
+    # Top bar
+    print <<END_OF_STRING
+<div id="topbar">
+    <a href="/" class="toplink"><span>About</span></a>
+    <a href="/blog/" class="toplink_active"><span class="toplink_activespan">Blog</span></a>
+    <a href="/codes/" class="toplink"><span>Codes</span></a>
+</div>
+END_OF_STRING
+    
+    # TODO tag bar
 end
 
 def footing(nb, from)
