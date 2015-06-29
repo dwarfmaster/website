@@ -1,6 +1,6 @@
 
 module Blog
-    def head(con, keywords, description)
+    def self.head(con, keywords, description)
         # Header
         print <<END_OF_STRING
 Content-type: text/html
@@ -50,7 +50,7 @@ END_OF_STRING
         puts "</div>"
     end
 
-    def footer
+    def self.footer
         print <<END_OF_STRING
 <div id="footbar">
     <p>This page is part of the Mon Super Blog! website from Luc Chabassier.</p>
@@ -59,5 +59,10 @@ END_OF_STRING
 </html>
 END_OF_STRING
     end
+
+    def self.get_path(name)
+        return Config.artdir + "/" + name + "/article"
+    end
+
 end
 

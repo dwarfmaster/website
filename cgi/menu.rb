@@ -2,13 +2,8 @@
 
 require 'mysql'
 require 'uri'
-
 require File.dirname(__FILE__) + '/blog.rb'
-
-$user   = "ruby"
-$pass   = "ruby"
-$dbname = "blog"
-$artdir = "/home/luc/Log/programmation/ruby/blog/articles"
+require File.dirname(__FILE__) + '/config.rb'
 
 def footing(nb, from)
     puts '<div id="navigation">' if from > 0 or nb == 6
@@ -35,13 +30,9 @@ def article(path, id)
     puts "\n<div class=\"article\">#{content}</div>"
 end
 
-def getPath(name)
-    return $artdir + "/" + name + "/article"
-end
-
 begin
     # Connection to db
-    con = Mysql.new 'localhost', $user, $pass, $dbname
+    con = Mysql.new 'localhost', Config.user, Config.pass, Config.dbname
     Blog.head(con, "blog, code", "Le blog personnel de Luc Chabassier où il parle de ce qui lui passe par la tête et présente ses codes et expérimentations.")
 
     # Parsing query parameters
@@ -69,7 +60,7 @@ begin
     nb = [6, arts.num_rows].min
     nb.times do
         row = arts.fetch_row
-        article(getPath(row[1]), row[0])
+        article(Blog.get_path(row[1]), row[0])
     end
     footing(nb, 0)
 rescue Mysql::Error => e
