@@ -1,0 +1,12 @@
+/* Defines website-scale style. */
+
+body
+{
+    background:#ddffdd;
+    color:#3b5d14;
+    font-weight:normal;
+    text-align:justify;
+    text-decoration:none;
+    font-size:14pt;
+}
+

@@ -1,0 +1,97 @@
+/**************************
+ *     Menus bars         *
+ **************************/
+
+#topbar
+{
+    font-size:14px;
+    color:#3b5d14;
+    background:#b2d281;
+    font-weight:bold;
+    padding:6px;
+    overflow:auto;
+    height:1%;
+    clear:both;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+}
+
+.toplink
+{
+    color:#3b5d14;
+    text-decoration:none;
+    margin:0 10px;
+    height:23px;
+    line-height:23px;
+    float:left;
+    display:block;
+    padding-left:2px;
+    padding-right:2px;
+}
+
+.toplink:hover
+{
+    background:#dddddd;
+    border-radius:5px;
+}
+
+.toplink_active
+{
+    color:#3b5d14;
+    text-decoration:none;
+    margin:0 10px;
+    height:23px;
+    line-height:23px;
+    background:white;
+    border-radius:5px;
+    padding-right:10px;
+    padding-left:10px;
+    float:left;
+}
+
+.toplink_activespan
+{
+    height:23px;
+    display:block;
+}
+
+#middlebar
+{
+    font-size:11px;
+    color:#3b5d14;
+    background:#90b557;
+    font-weight:bold;
+    padding:6px;
+    overflow:auto;
+    height:1%;
+    clear:both;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+}
+
+.middlelink
+{
+    color:#3b5d14;
+    text-decoration:none;
+    margin:0 5px;
+    padding-right:10px;
+    height:23px;
+    line-height:23px;
+    display:block;
+    float:left;
+    background:#ddeec2;
+    border-radius:5px;
+}
+
+.middlelink:hover
+{
+    background:#eeffc2;
+}
+
+.middlelink_span
+{
+    height:23px;
+    display:block;
+    padding-left:10px;
+}
+
