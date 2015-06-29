@@ -60,9 +60,5 @@ END_OF_STRING
 END_OF_STRING
     end
 
-    def self.get_path(name)
-        return Config.artdir + "/" + name + "/article"
-    end
-
 end
 

@@ -5,18 +5,12 @@ require File.dirname(__FILE__) + "/blog.rb"
 require File.dirname(__FILE__) + "/config.rb"
 
 def query_content(con, id)
-    cdoc = con.query("SELECT path FROM Articles WHERE id = #{id}")
+    cdoc = con.query("SELECT content FROM Articles WHERE id = #{id}")
     if cdoc.num_rows != 1
         # TODO signal error
         exit 2
     end
-    content = ""
-    File.open(Blog.get_path(cdoc.fetch_row[0]), "r") do |infile|
-        while (line = infile.gets)
-            content += line
-        end
-    end
-    return content
+    return cdoc.fetch_row[0]
 end
 
 def query_tags(con, id)

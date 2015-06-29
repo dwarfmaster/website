@@ -3,7 +3,7 @@ module Config
     @user   = "ruby"
     @pass   = "ruby"
     @dbname = "blog"
-    @artdir = "/home/luc/Log/programmation/ruby/blog/articles"
+    @rcsdir = "/home/luc/Log/programmation/ruby/blog/rcs"
 
     def self.user
         return @user
@@ -17,8 +17,8 @@ module Config
         return @dbname
     end
 
-    def self.artdir
-        return @artdir
+    def self.rcs
+        return @rcsdir
     end
 end
 

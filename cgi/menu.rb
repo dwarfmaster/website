@@ -20,14 +20,13 @@ def footing(nb, from)
     Blog.footer
 end
 
-def article(path, id)
-    content = "<a class=\"artlink\" href=\"article.cgi?id=#{id}\"></a>\n"
-    File.open(path, "r") do |infile|
-        while (line = infile.gets)
-            content += line
-        end
-    end
-    puts "\n<div class=\"article\">#{content}</div>"
+def article(content, id)
+    print <<END_OF_STRING
+<div class=\"article\">
+    <a class=\"artlink\" href=\"article.cgi?id=#{id}\"></a>
+    #{content}
+</div>
+END_OF_STRING
 end
 
 begin
@@ -53,14 +52,14 @@ begin
     end
 
     # Getting the articles
-    arts = con.query("SELECT DISTINCT id, path FROM Articles, Tags
+    arts = con.query("SELECT DISTINCT id, content FROM Articles, Tags
                       WHERE id = article #{tag == "" ? "" : "AND tag = \"#{tag}\""}
                       ORDER BY time DESC")
     # TODO use from
     nb = [6, arts.num_rows].min
     nb.times do
         row = arts.fetch_row
-        article(Blog.get_path(row[1]), row[0])
+        article(row[1], row[0])
     end
     footing(nb, 0)
 rescue Mysql::Error => e
