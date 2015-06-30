@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/ruby -Eutf-8:utf-8
 @modules_path = '/home/luc/Log/programmation/ruby/blog/cgi/'
 
 require 'mysql'
