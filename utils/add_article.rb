@@ -1,5 +1,6 @@
 #!/usr/bin/ruby -Eutf-8:utf-8
 @modules_path = '/home/luc/Log/programmation/ruby/blog/cgi/'
+@http_path = ''
 
 require 'mysql'
 require @modules_path + "config.rb"
@@ -32,7 +33,7 @@ begin
     con.query("INSERT INTO Tags (article,tag) VALUES #{values}")
 
     # Copy the ressources to their right place
-    system "cp -rvf #{rcs} #{Config.rcs + id}"
+    system "cp -rvf #{rcs} #{@http_path + Config.rcs + id}"
 rescue Mysql::Error => e
     puts e.errno
     puts e.error
