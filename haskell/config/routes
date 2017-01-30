@@ -1,0 +1,4 @@
+/      HomeR  GET
+/about AboutR GET
+/blog  BlogR  GET
+
