@@ -1,0 +1,9 @@
+
+<div id="topbar">
+    <a href=@{HomeR} class="toplink">
+        <span>Home
+    <a href=@{AboutR} class="toplink">
+        <span>About
+    <a href=@{BlogR} class="toplink">
+        <span>Blog
+

@@ -13,5 +13,6 @@ import Foundation
 getAboutR :: Handler Html
 getAboutR = defaultLayout $ do
         setTitle "DwarfMaster website"
+        $(widgetFileNoReload def "topbar")
         $(widgetFileNoReload def "about")
 

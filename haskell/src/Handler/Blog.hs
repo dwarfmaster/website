@@ -13,5 +13,6 @@ import Foundation
 getBlogR :: Handler Html
 getBlogR = defaultLayout $ do
         setTitle "DwarfMaster website"
+        $(widgetFileNoReload def "topbar")
         $(widgetFileNoReload def "blog")
 
