@@ -1,4 +1,7 @@
-<h1>DwarfMaster blog
 
-<p>This is my fantastic blog !
+$forall article <- articles
+    <div class="article">
+        <a class="artlink" href=@{ArticleR $ article_reference article}>
+        <h1>#{article_title article}
+        ^{article_summary article}
 

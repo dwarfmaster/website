@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE ViewPatterns #-}
 
 module Foundation where
 
 import Yesod
-import Blog
 
-data DwarvenSite = DwarvenSite Blog
+data DwarvenSite = DwarvenSite
 instance Yesod DwarvenSite
 
 mkYesodData "DwarvenSite" $(parseRoutesFile "config/routes")

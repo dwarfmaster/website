@@ -1,4 +1,7 @@
-/      HomeR  GET
-/about AboutR GET
-/blog  BlogR  GET
+/                      HomeR      GET
+/about                 AboutR     GET
+
+/blog                  QueryNullR GET
+/blog/query/#String    QueryR     GET
+/blog/articles/#String ArticleR   GET
 

@@ -4,6 +4,6 @@
         <span>Home
     <a href=@{AboutR} class="toplink">
         <span>About
-    <a href=@{BlogR} class="toplink">
+    <a href=@{QueryNullR} class="toplink">
         <span>Blog
 

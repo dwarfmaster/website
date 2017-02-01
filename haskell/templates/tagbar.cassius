@@ -1,0 +1,33 @@
+
+#tagbar
+    font-size:11px
+    color:#3b5d14
+    background:#90b557
+    font-weight:bold
+    padding:6px
+    overflow:auto
+    height:1%
+    clear:both
+    border-bottom-left-radius:10px
+    border-bottom-right-radius:10px
+
+.taglink
+    color:#3b5d14
+    text-decoration:none
+    margin:0 5px
+    padding-right:10px
+    height:23px
+    line-height:23px
+    display:block
+    float:left
+    background:#ddeec2
+    border-radius:5px
+
+.taglink:hover
+    background:#eeffc2
+
+.taglink_span
+    height:23px
+    display:block
+    padding-left:10px
+

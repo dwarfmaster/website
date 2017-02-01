@@ -7,8 +7,7 @@ module Main where
 import Yesod
 import Dispatch
 import Foundation
-import Blog
 
 main :: IO ()
-main = warpDebug 3001 $ DwarvenSite $ mkBlog []
+main = warpDebug 3001 $ DwarvenSite
 
