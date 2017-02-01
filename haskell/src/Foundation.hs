@@ -5,10 +5,16 @@
 
 module Foundation where
 
+import Data.Default
+import Text.Hamlet
 import Yesod
+import Yesod.Default.Util
 
 data DwarvenSite = DwarvenSite
-instance Yesod DwarvenSite
+instance Yesod DwarvenSite where
+    defaultLayout widget = do
+        pc <- widgetToPageContent $ $(widgetFileNoReload def "default-layout")
+        withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
 mkYesodData "DwarvenSite" $(parseRoutesFile "config/routes")
 

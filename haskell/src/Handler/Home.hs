@@ -9,12 +9,11 @@ import Yesod
 import Yesod.Default.Util
 
 import Foundation
+import Handler.Utility
 
 getHomeR :: Handler Html
 getHomeR = do
     let filenames = ["readme.txt", "report.pdf", "music.wav"] :: [String]
-    defaultLayout $ do
-        setTitle "DwarfMaster website"
-        $(widgetFileNoReload def "topbar")
+    makeHandler $ do
         $(widgetFileNoReload def "home")
 

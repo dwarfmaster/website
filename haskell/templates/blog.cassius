@@ -1,9 +1,4 @@
 
-/* TODO import article */
-
-body
-    background:#ddffdd
-
 .layout
     width:90%
     margin-right:auto

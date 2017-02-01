@@ -5,18 +5,16 @@
 module Handler.Blog where
 
 import Data.Default
-import Control.Monad
 import Yesod
 import Yesod.Default.Util
 
 import Foundation
 import Blog
 import Articles
+import Handler.Utility
 
 getBlogR :: Articles -> Handler Html
-getBlogR arts = defaultLayout $ do
-        setTitle "DwarfMaster website"
-        $(widgetFileNoReload def "topbar")
+getBlogR arts = makeHandler $ do
         let tags = getTags blog
         $(widgetFileNoReload def "tagbar")
         let articles = take 6 arts
