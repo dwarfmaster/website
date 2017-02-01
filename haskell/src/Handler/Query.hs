@@ -13,13 +13,19 @@ import qualified Blog         as Blg
 import           Articles
 import           Handler.Blog
 
-getQueryR :: String -> Handler Html
-getQueryR query = if null query then getQueryNullR else do
+getQueryFromR :: String -> Int -> Handler Html
+getQueryFromR query from = if null query then getQueryFromNullR from else do
         let articles = Blg.query blog query
-        getBlogR articles
+        getBlogR from query articles
+
+getQueryR :: String -> Handler Html
+getQueryR = (flip getQueryFromR) 0
+
+getQueryFromNullR :: Int -> Handler Html
+getQueryFromNullR from = do
+        let (_,articles) = blog
+        getBlogR from "" articles
 
 getQueryNullR :: Handler Html
-getQueryNullR = do
-        let (_,articles) = blog
-        getBlogR articles
+getQueryNullR = getQueryFromNullR 0
 

@@ -13,10 +13,11 @@ import Blog
 import Articles
 import Handler.Utility
 
-getBlogR :: Articles -> Handler Html
-getBlogR arts = makeHandler $ do
+getBlogR :: Int -> String -> Articles -> Handler Html
+getBlogR from query arts = makeHandler $ do
         let tags = getTags blog
         $(widgetFileNoReload def "tagbar")
-        let articles = take 6 arts
+        let articles = take 6 $ drop from arts
         $(widgetFileNoReload def "blog")
+        $(widgetFileNoReload def "navigation")
 

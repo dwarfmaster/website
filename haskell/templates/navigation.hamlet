@@ -1,0 +1,7 @@
+
+<div id="navigation">
+    $if from >= 6
+        <a class="prevpage" href=@{QueryFromR query (from - 6)}>< Prev Page
+    $if not $ null $ drop 6 articles
+        <a class="nextpage" href=@{QueryFromR query (from + 6)}>> Next Page
+
