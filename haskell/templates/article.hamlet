@@ -1,5 +1,12 @@
 
-<h1>My magnificient article !
+<div id="tags">
+    $forall tag <- article_tags article
+        <a class="tag" href=@{QueryR $ "+" ++ tag}>#{tag}
 
-<p>The name : #{article}
+<div id="article">
+    <h1>#{article_title article}
+    ^{article_content article}
+
+    <div id="navigation">
+        <a class="prevpage" href=@{QueryNullR}>< Back to menu
 

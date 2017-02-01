@@ -13,7 +13,10 @@ import Blog
 import Articles
 
 getArticleR :: String -> Handler Html
-getArticleR art = defaultLayout $ do
+getArticleR ref = getRealArticleR $ article_from_reference blog ref
+
+getRealArticleR :: Article -> Handler Html
+getRealArticleR art = defaultLayout $ do
         setTitle "DwarfMaster website"
         $(widgetFileNoReload def "topbar")
         let tags = getTags blog
