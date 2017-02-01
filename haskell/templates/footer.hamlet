@@ -1,0 +1,5 @@
+
+<div id="footer">
+    <p>Blog by 
+        <a href=@{AboutR}>DwarfMaster
+

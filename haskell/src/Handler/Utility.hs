@@ -15,4 +15,5 @@ makeHandler widget = defaultLayout $ do
     setTitle "DwarfMaster website"
     $(widgetFileNoReload def "topbar")
     widget
+    $(widgetFileNoReload def "footer")
 
