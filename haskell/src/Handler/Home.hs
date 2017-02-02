@@ -13,7 +13,5 @@ import Handler.Utility
 
 getHomeR :: Handler Html
 getHomeR = do
-    let filenames = ["readme.txt", "report.pdf", "music.wav"] :: [String]
-    makeHandler $ do
-        $(widgetFileNoReload def "home")
+    makeHandler $ $(widgetFileNoReload def "home")
 

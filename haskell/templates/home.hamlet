@@ -1,8 +1,16 @@
-$if null filenames
-    <p>No files have been uploaded yet.
-$else
-    <h2>Previously submitted files
-    <ul>
-        $forall filename <- filenames
-            <li>#{filename}
+
+<div id="article">
+    <h1>DwarfMaster website
+
+    <p>
+        A personal blog about anything I feel like writing about, meaning
+        mostly computer related articles.
+
+    <p>
+        If you want to know more about me, there is an
+        <a href=@{AboutR}>about
+        page.
+
+    <p>
+        Beware, some posts may be in french !
 
