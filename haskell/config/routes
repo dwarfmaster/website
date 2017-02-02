@@ -1,11 +1,14 @@
-/                        HomeR          GET
-/about                   AboutR         GET
-                                        
-/blog                    QueryNullR     GET
-/blog/#Int               QueryFromNullR GET
-/blog/query/#String      QueryR         GET
-/blog/query/#String/#Int QueryFromR     GET
+/                              HomeR          GET
+/about                         AboutR         GET
+                                              
+/blog                          QueryNullR     GET
+/blog/#Int                     QueryFromNullR GET
+/blog/query/#String            QueryR         GET
+/blog/query/#String/#Int       QueryFromR     GET
+                               
+/blog/articles/#String         ArticleR       GET
+/blog/articles/#String/#String ArticleDataR   GET
 
-/blog/articles/#String   ArticleR       GET
+/data/#String                  DataR          GET
 
 

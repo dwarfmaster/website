@@ -12,6 +12,7 @@ import Handler.About
 import Handler.Blog
 import Handler.Query
 import Handler.Article
+import Handler.Data
 
 mkYesodDispatch "DwarvenSite" resourcesDwarvenSite
 

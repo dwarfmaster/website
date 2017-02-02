@@ -18,11 +18,11 @@
         .
 
     <div class="figure">
-        <img class="picture" src="/data/logo.svg">
+        <img class="picture" src=@{DataR "logo.svg"}>
         <p class="label">My logo
 
     <div class="figure">
-        <img class="picture" src="/data/oldlogo.png">
+        <img class="picture" src=@{DataR "oldlogo.png"}>
         <p class="label">My old logo
 
 
