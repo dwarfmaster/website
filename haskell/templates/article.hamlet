@@ -5,6 +5,8 @@
 
 <div id="article">
     <h1>#{article_title article}
+    <div id="date">
+        <p>#{article_date_string article}
     ^{article_content article}
 
     <div id="navigation">

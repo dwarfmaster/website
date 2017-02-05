@@ -13,6 +13,10 @@ body
     line-height:1.5em
     clear:both
 
+#date
+    color:#3b5d14
+    font-style:normal
+
 h1
     color:#3b5d14
     font-weight:bold

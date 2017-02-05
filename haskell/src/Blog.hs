@@ -90,8 +90,11 @@ parseQuery query = (get_queries '+', get_queries '-')
 query :: Blog -> String -> Articles
 query blog query = (uncurry $ queryArticles blog) $ parseQuery query
 
-reference_format = iso8601DateFormat $ Just "%H:%M:%S"
-reference_locale = defaultTimeLocale
+article_date_format = iso8601DateFormat Nothing
+article_date_locale = defaultTimeLocale
+article_date_string :: Article -> String
+article_date_string article = formatTime article_date_locale article_date_format
+                            $ article_date article
 
 article_from_reference :: Blog -> String -> Article
 article_from_reference (_,articles) ref =
