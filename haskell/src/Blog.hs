@@ -19,22 +19,24 @@ import           Yesod.Default.Util
 import           Foundation
 
 data Article = Article
-    { article_title   :: String   -- The title of the article
-    , article_summary :: Widget   -- The name of the hamlet summary file
-    , article_content :: Widget   -- The name of the hamlet content file
-    , article_tags    :: [String] -- The tags of the article
-    , article_date    :: UTCTime  -- The article time
+    { article_title     :: String   -- The title of the article
+    , article_summary   :: Widget   -- The name of the hamlet summary file
+    , article_content   :: Widget   -- The name of the hamlet content file
+    , article_tags      :: [String] -- The tags of the article
+    , article_date      :: UTCTime  -- The article time
+    , article_reference :: String   -- A string uniquely identifying the article
     }
 
 article404 ref = Article
-    { article_title = "Error 404 : no article for " ++ ref
-    , article_summary = $(widgetFileNoReload def "article404")
-    , article_content = $(widgetFileNoReload def "article404")
-    , article_tags    = ["404", "You Lost", "error"]
-    , article_date    = UTCTime
-                        { utctDay     = fromGregorian 1970 1 1
-                        , utctDayTime = secondsToDiffTime 0
-                        }
+    { article_title     = "Error 404 : no article for " ++ ref
+    , article_summary   = $(widgetFileNoReload def "article404")
+    , article_content   = $(widgetFileNoReload def "article404")
+    , article_tags      = ["404", "You Lost", "error"]
+    , article_date      = UTCTime
+                          { utctDay     = fromGregorian 1970 1 1
+                          , utctDayTime = secondsToDiffTime 0
+                          }
+    , article_reference = "error404"
     }
 
 -- What matters here is the Ord instance
@@ -91,17 +93,10 @@ query blog query = (uncurry $ queryArticles blog) $ parseQuery query
 reference_format = iso8601DateFormat $ Just "%H:%M:%S"
 reference_locale = defaultTimeLocale
 
-article_reference :: Article -> String
-article_reference article = formatTime reference_locale reference_format
-                            $ article_date article
-
 article_from_reference :: Blog -> String -> Article
 article_from_reference (_,articles) ref =
-    let result = parseTimeM True reference_locale reference_format ref in
-    case result of
-     Nothing   -> article404 ref
-     Just time -> case filter (\a -> article_date a == time) articles of
-                   []        -> article404 ref
-                   [article] -> article
-                   _         -> article404 ref -- Should not happen
+    case filter (\a -> article_reference a == ref) articles of
+     []        -> article404 ref
+     [article] -> article
+     _         -> article404 ref -- Should not happen
 

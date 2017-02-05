@@ -26,12 +26,14 @@ articles =
         (toWidget $ $(whamletFile "articles/article1/content.hamlet"))
         ["first", "test", "I'm having fun"]
         (readDate 1 2 2017)
+        "article1"
     , Article
         "Another article"
         (toWidget $ $(whamletFile "articles/article2/summary.hamlet"))
         (toWidget $ $(whamletFile "articles/article2/content.hamlet"))
         ["test", "both"]
         (readDate 2 2 2017)
+        "article2"
     ]
 
 
