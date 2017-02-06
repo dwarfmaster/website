@@ -9,5 +9,5 @@ import Dispatch
 import Foundation
 
 main :: IO ()
-main = warpDebug 3001 $ DwarvenSite
+main = warp 3001 DwarvenSite
 
