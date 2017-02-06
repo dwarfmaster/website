@@ -1,0 +1,15 @@
+
+SECTION This is a title
+
+SUBSECTION And this is a subtitle.
+
+<p>Oh, look, content !!
+
+FIGURE
+    IMG(logo.svg)
+    LABEL A beautiful picture
+
+<p>
+    By the way, the other article is LARTICLE(article2, there) (about something,
+    I forgot what), and this is LHOME(home).
+

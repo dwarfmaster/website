@@ -12,7 +12,7 @@ let
         isLibrary = false;
         isExecutable = true;
         executableHaskellDepends = [ base yesod data-default time split ];
-        buildDepends = with pkgs; [ cabal-install ];
+        buildDepends = with pkgs; [ cabal-install m4 ];
         homepage = "https://github.com/lucas8/website";
         description = "DwarfMaster website";
         license = stdenv.lib.licenses.gpl3;
