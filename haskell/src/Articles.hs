@@ -35,6 +35,13 @@ articles =
         ["test", "both"]
         (readDate 2 2 2017)
         "article2"
+    , Article
+        "Hacking Hurd : setting up the workflow"
+        (toWidget $ $(whamletFile "articles/hacking-hurd-workflow/summary.hamlet"))
+        (toWidget $ $(whamletFile "articles/hacking-hurd-workflow/content.hamlet"))
+        ["system", "hurd", "qemu", "prog"]
+        (readDate 12 2 2017)
+        "hacking-hurd-workflow"
     ]
 
 

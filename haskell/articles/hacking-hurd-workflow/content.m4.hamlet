@@ -1,0 +1,140 @@
+
+<h2>Introduction
+
+<p>
+    <a href="https://www.gnu.org/software/hurd/">Hurd
+    is an interesting piece of software, and digging in may be an
+    interesting way of learning of the ins and outs of operating systems. But
+    you can't just download the source code, compile it and run it as you
+    would do with most of the programs.
+
+<p>
+    Here I talk about setting up an environment for working on the
+    <em>user space
+    , ie not the micro kernel. In this post I will cover how to install Hurd
+    in a virtual environment, how to use it, and how to set the whole thing up
+    to ease the writing and testing of software on Hurd.
+
+<h2>The installation
+
+<p>
+    Hurd in itself is not an operating system, but only a kernel, and can't be
+    used on its own (like
+    <a href="http://www.tldp.org/LDP/sag/html/gnu-or-not.html">Linux
+    ). So what do we install. Well, like there are Linux distribution, there
+    are Hurd distributions, even though less numerous :
+    <ul>
+        <li>
+            <a href="http://www.debian.org/ports/hurd/">Debian GNU/Hurd
+            , a porting of the Debian GNU/Linux distribution over Hurd. It is
+            the official distribution.
+        <li>
+            <a href="https://www.archhurd.org/">ArchHurd
+            , a porting of the ArchLinux distribution.
+        <li>
+            <a href="https://www.gnu.org/software/hurd/hurd/running/nix.html">NixHurd
+            , although it is more experimental and can only run in Qemu.
+
+<p>
+    Since we are only interested in working on Hurd itself, I will propose to
+    install Debian GNU/Hurd, as it is the most stable of the three.
+
+<p>
+    To ease the testing of the system, the installation will be done in a
+    <a href="http://www.qemu-project.org/">Qemu
+    . To begin, you must install the
+    <code>qemu
+    package (or
+    <code>qemu-kvm
+    ) on your system and enable KVM in your Linux Kernel, to speed up the
+    simulation.
+
+<p>
+    You must now setup Qemu. First of all, you must create a virtual disk on
+    which Hurd will installed. The command to do so is :<br>
+    <code>qemu-img create file.img size<br>
+    where
+    <code>size
+    is 3G for example (this capacity is indeed enough for what we will do).
+
+<p>
+    Once this is done, you can download the iso with the following command :<br>
+    <code>wget http://people.debian.org/~sthibault/hurd-i386/installer/cdimage/cd-1.iso
+
+<p>
+    Once this is done, you can launch the system with :<br>
+    <code>qemu-kvm -m 1G -drive cache=writeback,file=file.img -cdrom cd-1.iso
+
+<p>
+    The virtual machine will then boot the live CD, and you will get a grub
+    where you can choose the installation process. Go for the<br>
+    <code>Pseudo-graphical install<br>
+    which will give you a standard ncurses interface.
+
+FIGURE
+    IMG(qemu.png)
+    LABEL GNU/Hurd live CD
+
+<p>
+    The installation process is well detailed : if you have ever installed a
+    Linux distribution, it shouldn't trouble you. Leaving the default option
+    are fine in most cases (the only trouble I got was that it failed when
+    asked to install a graphical environment, so I didn't install one).
+
+<p>
+    Once this is finished, shutdown the virtual machine.
+
+<h2>Installing the software
+
+<p>
+    For now, login as root to setup the environment. The user you created will
+    be used later.
+
+<p>
+    First of all, we will need to upgrade the installed software, but simply
+    running <code>apt update</code> failed for me. The reason was that it first
+    tried to update from the cd. So the first step is to go edit the
+    <code>/etc/apt/sources.list
+    file and comment (or delete) the lines starting by <code>deb cdrom</code>.
+
+<p>
+    Once you've done this, run :<br>
+    <code>apt update && apt upgrade
+
+<p>
+    You can now use <code>apt install</code> to install any software you might
+    want. To turn the virtual machine off, first use the <code>shutdown -h 0</code>
+    command and close the qemu window once you see the <code>running in tight loop</code>
+    message.
+
+<h3>Sharing files with host
+
+<p>
+    The workflow advocated by the
+    <a href="https://www.gnu.org/software/hurd/contributing.html#index4h2">official page
+    is to develop and compile directly in Hurd. The compiling part is necessary
+    (unless you manage to setup a cross compilation toolchain from Linux to Hurd),
+    by if like me you don't want to have to setup your whole programming
+    environment in a virtual machine, you may want to at least do the programming
+    part on your host system.
+
+<p>
+    The workflow I will present is thus the following : you work on your host
+    system, send the files to the virtual machine, and compile and run there.
+    Since Qemu does not support sharing a disk with the host, another solution
+    must be found. You could use git to synchronize the files, but it would
+    mean committing every change you want to test. So to send the files, I will
+    describe how to setup sshfs in your host and mount it from hurd.
+
+<p>
+    Notice we could have done the contrary : installing sshfs in Hurd, and mount
+    the virtual machine filesystem on the host. But that would mean the data is
+    on the Qemu disk, which I expect to be less efficient than a physical disk.
+    Furthermore, the risk of corrupting the Qemu disk is quite high, so no
+    valuable data should be stored in it.
+
+<h3>Building the sources
+
+<p>
+    TODO
+
