@@ -124,14 +124,37 @@ FIGURE
     Since Qemu does not support sharing a disk with the host, another solution
     must be found. You could use git to synchronize the files, but it would
     mean committing every change you want to test. So to send the files, I will
-    describe how to setup sshfs in your host and mount it from hurd.
+    describe how to setup nfs in your host and mount it from hurd.
 
 <p>
-    Notice we could have done the contrary : installing sshfs in Hurd, and mount
+    Notice we could have done the contrary : installing nfs in Hurd, and mount
     the virtual machine filesystem on the host. But that would mean the data is
     on the Qemu disk, which I expect to be less efficient than a physical disk.
     Furthermore, the risk of corrupting the Qemu disk is quite high, so no
     valuable data should be stored in it.
+
+<p>
+    You need to setup an nfs server on your host machine, which export the
+    directory in which you will download the hurd sources and work on them. I
+    will not describe this process, as it is distribution specific. Just
+    remember to set the <code>insecure</code> flag on your exported directory.
+
+<p>
+    Them you need to make Hurd in the qemu machine able to communicate with the
+    host. Lukily there is no configuration to do for qemu. All that is left
+    is configuring hurd. In any linux distribution, we would use dhcp, but
+    hurd does not have dhcp utilities (or 
+    <a href="https://www.gnu.org/software/hurd/hurd/running/debian/dhcp.html">maybe
+    ?). Same thing, Hurd automagically autoconnects with the qemu network
+    device. You can now access your host by ssh for example using its IP
+    address.
+
+<p>
+    A bit of warning : the incoming IP your host see is not localhost, but its
+    own IP. You may need this information to correctly setup nfs.
+
+<p>
+    Now on to nfs in Hurd.
 
 <h3>Building the sources
 
