@@ -19,8 +19,8 @@ readDate day month year = UTCTime
     , utctDayTime = secondsToDiffTime 0
     }
 
-articles :: Articles
-articles =
+staging :: Articles
+staging =
     [ Article
         "My Awesome title"
         (toWidget $ $(whamletFile "articles/article1/summary.hamlet"))
@@ -35,16 +35,19 @@ articles =
         ["test", "both"]
         (readDate 2 2 2017)
         "article2"
-    , Article
+    ]
+
+prod :: Articles
+prod =
+    [ Article
         "Hacking Hurd : setting up the workflow"
         (toWidget $ $(whamletFile "articles/hacking-hurd-workflow/summary.hamlet"))
         (toWidget $ $(whamletFile "articles/hacking-hurd-workflow/content.hamlet"))
         ["system", "hurd", "qemu", "prog"]
-        (readDate 12 2 2017)
+        (readDate 28 2 2017)
         "hacking-hurd-workflow"
     ]
 
-
 blog :: Blog
-blog = mkBlog articles
+blog = mkBlog $ prod
 

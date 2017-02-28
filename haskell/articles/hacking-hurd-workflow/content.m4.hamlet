@@ -123,41 +123,70 @@ FIGURE
     system, send the files to the virtual machine, and compile and run there.
     Since Qemu does not support sharing a disk with the host, another solution
     must be found. You could use git to synchronize the files, but it would
-    mean committing every change you want to test. So to send the files, I will
-    describe how to setup nfs in your host and mount it from hurd.
+    mean committing every change you want to test. Another solution would to
+    setup a filesystem sharing server on your host and connect to it from
+    Hurd. But Hurd doesn't seem to have an sshfs implementation and despite
+    having a
+    <a href="https://www.gnu.org/software/hurd/hurd/translator/nfs.html">nfs
+    implementation, it seems to be
+    <a href="https://www.gnu.org/software/hurd/community/gsoc/project_ideas/nfs.html">quite experimental
+    .
 
 <p>
-    Notice we could have done the contrary : installing nfs in Hurd, and mount
-    the virtual machine filesystem on the host. But that would mean the data is
-    on the Qemu disk, which I expect to be less efficient than a physical disk.
-    Furthermore, the risk of corrupting the Qemu disk is quite high, so no
-    valuable data should be stored in it.
+    We will use the fact that Hurd comes with a working ssh server to use rsync.
+    While qemu automatically setup networking so that the virtual environment
+    has access to internet and Hurd autoconnects, we will need to pass a flag
+    to qemu so that we can connect from the host to the guest. Remember that
+    due to the specific nature of ping, you cannot ping from the guest OS. Thus
+    ping failing does not mean you are not connected.
 
 <p>
-    You need to setup an nfs server on your host machine, which export the
-    directory in which you will download the hurd sources and work on them. I
-    will not describe this process, as it is distribution specific. Just
-    remember to set the <code>insecure</code> flag on your exported directory.
+    This flag is <code>-redir tcp:iph::ipg</code> : it will redirect any connection
+    on localhost port iph on the host to ipg port on the guest. For example,
+    if you launch qemu with the command :<br>
+    <code>qemu-kvm -m 1G -drive cache=writeback,file=file.img -redir tcp:2222::22<br>
+    you can ssh into your hurd installation with :<br>
+    <code>ssh -p 2222 root@localhost<br>
+    This may be an easier to work in hurd rather than in qemu.
 
 <p>
-    Them you need to make Hurd in the qemu machine able to communicate with the
-    host. Lukily there is no configuration to do for qemu. All that is left
-    is configuring hurd. In any linux distribution, we would use dhcp, but
-    hurd does not have dhcp utilities (or 
-    <a href="https://www.gnu.org/software/hurd/hurd/running/debian/dhcp.html">maybe
-    ?). Same thing, Hurd automagically autoconnects with the qemu network
-    device. You can now access your host by ssh for example using its IP
-    address.
-
-<p>
-    A bit of warning : the incoming IP your host see is not localhost, but its
-    own IP. You may need this information to correctly setup nfs.
-
-<p>
-    Now on to nfs in Hurd.
+    In order for rsync to work, in must also be installed on the guest. Thus run :<br>
+    <code>apt install rsync<br>
+    in Qemu. You can then synchronize any directory with :<br>
+    <code>rsync -r --rsh='ssh -p 2222' dir user@localhost:/path/<br>
+    You will get a shitload of errors due to operations not being implemented
+    in Hurd's version of ext2, but the file will still be synchronized.
 
 <h3>Building the sources
 
 <p>
-    TODO
+    All that is left is to install the right software in Hurd to build the
+    translator and run them. Since Hurd allows any translator to run in user
+    space, we will use the user created during the installation.
+
+<p>
+    To build the source, you first need to install some tools and their
+    dependencies. To install the tools, you must run the following command :<br>
+    <code> apt install build-essential fakeroot git<br>
+    And for the dependencies :<br>
+    <code> apt build-dep hurd
+
+<p>
+    Then you must download the sources. They are managed with git, so all
+    you have to do is to clone their repo. The links are given on
+    <a href="http://savannah.gnu.org/git/?group=hurd">this
+    page. Once you have all the sources you want, you can copy them to Hurd
+    using rsync as seen above.
+
+<p>
+    To compile the code source, there are a few steps. First of all, you must
+    generate the configure script. To do so, run <code>autoconf</code> in the
+    Hurd directory. Then create a build directory, move into it and call
+    the configure script from it. Then all that's left is to run <code>make</code>.
+    You can pass to make the name of a submodule to build only it.
+
+<h2>Conclusion
+
+<p>
+    You now have a working environment to hack Hurd and contribute. Have fun !
 
