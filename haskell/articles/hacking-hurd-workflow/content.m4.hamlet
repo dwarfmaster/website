@@ -150,6 +150,20 @@ FIGURE
     This may be an easier to work in hurd rather than in qemu.
 
 <p>
+    Since qemu 2.6 complain about <code>-redir</code> begin deprecated, it
+    may be a good idea to replace it. The new option is
+    <code>-net nic -net user,hostfwd=tcp::2222-:22
+    .
+
+<p>
+    If you only want to work on you virtual machine through ssh, you may want
+    to launch qemu without a graphic interface (for example if you want to launch
+    qemu on a distant headless computer). To do that, append the
+    <code>-nographic
+    option to the previous command. If you want to keep the output on terminal,
+    you can replace <code>-nographic</code> by <code>-curses</code>.
+
+<p>
     In order for rsync to work, in must also be installed on the guest. Thus run :<br>
     <code>apt install rsync<br>
     in Qemu. You can then synchronize any directory with :<br>
