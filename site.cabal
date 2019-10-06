@@ -3,7 +3,7 @@ version:       0.1.0.0
 synopsis:      DwarfMaster website
 -- description:
 homepage:      https://github.com/lucas8/website
-license:       GPL-3
+license:       MIT
 license-file:  LICENSE
 author:        Luc Chabassier
 maintainer:    luc.linux@mailoo.org
