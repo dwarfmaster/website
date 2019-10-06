@@ -1,28 +1,31 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "default" }:
+{ nixpkgs ? import <nixpkgs> {}, compiler ? "default", doBenchmark ? false, withHoogle ? true }:
 
 let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base, stdenv, yesod, data-default, time, split }:
-      mkDerivation {
-        pname = "Site";
-        version = "0.1.0.0";
-        src = ./.;
-        isLibrary = false;
-        isExecutable = true;
-        executableHaskellDepends = [ base yesod data-default time split ];
-        buildDepends = with pkgs; [ cabal-install m4 ];
-        homepage = "https://github.com/lucas8/website";
-        description = "DwarfMaster website";
-        license = stdenv.lib.licenses.gpl3;
-      };
+  f = import ./.;
 
-  haskellPackages = if compiler == "default"
+  hei-tools = hpkgs: with hpkgs; 
+    [ Cabal_2_4_1_0 apply-refact hasktags hlint ];
+
+  # Enable Hoogle and packages
+  overrides = self: super: {
+    ghc = super.ghc // { withPackages = if withHoogle
+                                          then super.ghc.withHoogle
+                                          else super.ghc.withPackages; };
+    ghcWithPackages = lp: self.ghc.withPackages (hpkgs: hei-tools hpkgs ++ lp hpkgs);
+  };
+
+  selPackages = if compiler == "default"
                        then pkgs.haskellPackages
                        else pkgs.haskell.packages.${compiler};
 
-  drv = haskellPackages.callPackage f {};
+  haskellPackages = selPackages.override { inherit overrides; };
+
+  variant = if doBenchmark then pkgs.haskell.lib.doBenchmark else pkgs.lib.id;
+
+  drv = variant (haskellPackages.callPackage f {});
 
 in
 
