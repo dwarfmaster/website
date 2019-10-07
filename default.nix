@@ -1,5 +1,6 @@
-{ mkDerivation, base, containers, data-default, shakespeare, split
-, stdenv, time, yesod
+{ mkDerivation, base, blaze-html, blaze-markup, containers
+, data-default, mtl, pandoc, pandoc-types, shakespeare, split
+, stdenv, text, time, yesod
 }:
 mkDerivation {
   pname = "Site";
@@ -8,7 +9,8 @@ mkDerivation {
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [
-    base containers data-default shakespeare split time yesod
+    base blaze-html blaze-markup containers data-default mtl pandoc
+    pandoc-types shakespeare split text time yesod
   ];
   homepage = "https://github.com/lucas8/website";
   description = "DwarfMaster website";
