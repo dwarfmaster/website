@@ -1,4 +1,8 @@
 *~
 dist
 *.aes
+*/_cache
+*/_site
+*/dist*
+*/.ghc*
 
