@@ -1,16 +1,20 @@
 ---
-title: Home
+title: DwarfMaster website
 ---
 
 <h2>Welcome</h2>
 
-<img src="/images/haskell-logo.png" style="float: right; margin: 10px;" />
+<img src="/images/logo.svg" />
 
 <p>Welcome to my blog!</p>
 
-<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
+<p>See the <a href="/about.html">about</a> for more details. Here are the last 5 posts :</p>
 
-<h2>Posts</h2>
-$partial("templates/post-list.html")$
+$for(articles)$
+    <li>
+        <a href="$url$">$title$</a> - $date$
+    </li>
+$endfor$
 
-<p>…or you can find more in the <a href="/archive.html">archives</a>.</p>
+<p>The complete list is <a href="/blog.html">here</a>.</p>
+

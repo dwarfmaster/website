@@ -19,6 +19,9 @@ hoogle:
 ghci:
 	nix-shell --command "cabal new-repl"
 
+clean:
+	$(SITEXEC) clean
+
 exec:
 	$(SITEXEC) server
 
