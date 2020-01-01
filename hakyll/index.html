@@ -4,17 +4,17 @@ title: DwarfMaster website
 
 <h2>Welcome</h2>
 
-<img src="/images/logo.svg" />
-
 <p>Welcome to my blog!</p>
 
 <p>See the <a href="/about.html">about</a> for more details. Here are the last 5 posts :</p>
 
+<ul>
 $for(articles)$
     <li>
         <a href="$url$">$title$</a> - $date$
     </li>
 $endfor$
+</ul>
 
 <p>The complete list is <a href="/blog.html">here</a>.</p>
 
