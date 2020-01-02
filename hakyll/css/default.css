@@ -82,6 +82,27 @@ nav a:hover {
     border-radius: 5px;
 }
 
+.icon {
+    text-decoration: none;
+    height:          23px;
+    line-height:     23px;
+    float:           right;
+    margin:          0 10px;
+    display:         block;
+    padding:         3px;
+    background:      var(--base04);
+    border-radius:   5px;
+}
+
+.icon img {
+    max-width: 23px;
+    height:    auto;
+}
+
+.icon:hover {
+    background: var(--base0C);
+}
+
 /* Articles */
 #date {
     color:      var(--base03);
