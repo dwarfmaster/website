@@ -111,6 +111,54 @@ nav a:hover {
     color:         var(--base02);
 }
 
+/* Article list */
+
+.postlist {
+    list-style-type: none;
+    padding:         0;
+}
+
+.postlist li {
+    background:  var(--base08);
+    padding:     5px;
+    margin:      0;
+    font-weight: bold;
+    font-size:   18pt;
+}
+
+.postlist li:nth-child(even) {
+    background:  var(--base09);
+}
+
+.postlist li a {
+    color:   var(--base00);
+    display: inline-block;
+    width:   100%;
+    height:  100%;
+}
+
+.postlist li:hover {
+    background: var(--base02);
+}
+
+.postlist li:hover a {
+    color:      var(--base08);
+}
+
+.postlist li:nth-child(even):hover a {
+    color:      var(--base09);
+}
+
+.postlist li:first-child {
+    border-top-left-radius:  5px;
+    border-top-right-radius: 5px;
+}
+
+.postlist li:last-child {
+    border-bottom-left-radius:  5px;
+    border-bottom-right-radius: 5px;
+}
+
 /* Defaults */
 h1 {
     color:           var(--base0D);
