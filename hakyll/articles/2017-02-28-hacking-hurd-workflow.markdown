@@ -1,6 +1,7 @@
 ---
 title: "Hacking Hurd: setting up the workflow"
 date: February 28, 2017
+tags: programming, system
 ...
 
 # Introduction
