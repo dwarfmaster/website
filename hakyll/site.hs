@@ -25,6 +25,7 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/article.html" postCtx
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
@@ -41,6 +42,12 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = postCtx `mappend` bodyField "description"
+            articles <- take 10 <$> (recentFirst =<< loadAllSnapshots "articles/*" "content")
+            renderAtom feedConfiguration feedCtx articles
 
     match "index.html" $ do
         route idRoute
@@ -63,3 +70,12 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+feedConfiguration :: FeedConfiguration
+feedConfiguration = FeedConfiguration
+                  { feedTitle       = "DwarfMaster blog"
+                  , feedDescription = "Random but mostly computer-sciency posts"
+                  , feedAuthorName  = "Luc Chabassier aka DwarfMaster"
+                  , feedAuthorEmail = "dwarfmaster@dwarfmaster.net"
+                  , feedRoot        = "https://dwarfmaster.net"
+                  }
