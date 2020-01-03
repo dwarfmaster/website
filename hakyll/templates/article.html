@@ -1,5 +1,10 @@
 <article>
     <section class="header">
+        <div id="tags">
+        $for(tagsL)$
+            <a href=$url$>$title$</a>
+        $endfor$
+        </div>
         <h1>$title$</h1>
         <div id="date">$date$</div>
     </section>

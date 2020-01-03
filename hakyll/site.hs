@@ -1,7 +1,9 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ViewPatterns #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import           Debug.Trace
 
 
 --------------------------------------------------------------------------------
@@ -21,12 +23,26 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
+    tags <- buildTags "articles/*" (fromCapture "tags/*.html")
+
+    tagsRules tags $ \tag pat -> do
+        route idRoute
+        compile $ do
+            articles <- recentFirst =<< loadAll pat
+            let postCtx = postCtxWithTags tags
+                articlesField = listField "articles" postCtx (pure articles)
+                titleField = constField "title" ("Posts tagged \""++tag++"\"")
+                indexCtx = articlesField <> titleField <> defaultContext
+            makeItem "" >>= loadAndApplyTemplate "templates/tag.html" indexCtx
+                        >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                        >>= relativizeUrls
+
     match "articles/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/article.html" postCtx
+            >>= loadAndApplyTemplate "templates/article.html" (postCtxWithTags tags)
             >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
             >>= relativizeUrls
 
     create ["blog.html"] $ do
@@ -34,8 +50,10 @@ main = hakyll $ do
         compile $ do
             articles <- recentFirst =<< loadAll "articles/*"
             let archiveCtx =
-                    listField "articles" postCtx (return articles) `mappend`
-                    defaultContext
+                    listField "articles" (postCtxWithTags tags) (return articles)
+                 <> constField "title" "Archive"
+                 <> tagsListField tags
+                 <> defaultContext
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
@@ -45,7 +63,7 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = postCtx `mappend` bodyField "description"
+            let feedCtx = (postCtxWithTags tags) `mappend` bodyField "description"
             articles <- take 10 <$> (recentFirst =<< loadAllSnapshots "articles/*" "content")
             renderAtom feedConfiguration feedCtx articles
 
@@ -54,7 +72,7 @@ main = hakyll $ do
         compile $ do
             articles <- take 5 <$> (recentFirst =<< loadAll "articles/*")
             let indexCtx =
-                    listField "articles" postCtx (return articles) `mappend`
+                    listField "articles" (postCtxWithTags tags) (return articles) `mappend`
                     defaultContext
 
             getResourceBody
@@ -66,10 +84,33 @@ main = hakyll $ do
 
 
 --------------------------------------------------------------------------------
+postCtxWithTags :: Tags -> Context String
+postCtxWithTags tags =
+    tagsField "tags" tags
+ <> tagsListField tags
+ <> postCtx
+
+tagsListField :: Tags -> Context String
+tagsListField tags = listField "tagsL" tagsCtx getAllTags
+    where getAllTags :: Compiler [Item (String,[Identifier])]
+          getAllTags = pure . map mkItem $ tagsMap tags
+           where mkItem :: (String,[Identifier]) -> Item (String,[Identifier])
+                 mkItem x@(t,_) = Item (tagsMakeId tags t) x
+
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+    dateField "date" "%B %e, %Y"
+ <> defaultContext
+
+tagsCtx :: Context (String,[Identifier])
+tagsCtx = listFieldWith "articles" postCtx getPosts
+       <> metadataField
+       <> urlField "url"
+       <> pathField "path"
+       <> titleField "title"
+       <> missingField
+ where getPosts :: Item (String,[Identifier]) -> Compiler [Item String]
+       getPosts (itemBody -> (_,is)) = mapM load is
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -79,3 +120,4 @@ feedConfiguration = FeedConfiguration
                   , feedAuthorEmail = "dwarfmaster@dwarfmaster.net"
                   , feedRoot        = "https://dwarfmaster.net"
                   }
+

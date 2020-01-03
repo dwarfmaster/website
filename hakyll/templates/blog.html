@@ -1,9 +1,12 @@
 
-<ul class="postlist">
-$for(articles)$
-    <li>
-        <a href="$url$">$title$ - $date$</a>
-    </li>
+<h1>Archive</h1>
+
+$partial("templates/post-list.html")$
+
+<h1>Tags</h1>
+
+$for(tagsL)$
+<h2>$title$</h2>
+$partial("templates/post-list.html")$
 $endfor$
-</ul>
 
