@@ -122,19 +122,16 @@ nav a:hover {
 }
 
 .postlist li {
-    background:  var(--base08);
-    padding:     5px;
-    margin:      0;
-    font-weight: bold;
-    font-size:   18pt;
-}
-
-.postlist li:nth-child(even) {
-    background:  var(--base09);
+    background:    var(--base04);
+    padding:       5px;
+    margin:        0;
+    font-weight:   bold;
+    font-size:     18pt;
+    border-bottom: 3px solid var(--base00);
 }
 
 .postlist li a {
-    color:   var(--base00);
+    color:    var(--base02);
     display: inline-block;
     width:   100%;
     height:  100%;
@@ -145,11 +142,7 @@ nav a:hover {
 }
 
 .postlist li:hover a {
-    color:      var(--base08);
-}
-
-.postlist li:nth-child(even):hover a {
-    color:      var(--base09);
+    color:     var(--base04);
 }
 
 .postlist li:first-child {
@@ -160,6 +153,11 @@ nav a:hover {
 .postlist li:last-child {
     border-bottom-left-radius:  5px;
     border-bottom-right-radius: 5px;
+    border:                     none;
+}
+
+.postdate {
+    float: right;
 }
 
 /* Tags */
