@@ -97,6 +97,7 @@ nav a:hover {
     text-decoration: none;
     font-style:      normal;
     margin-left:     0em;
+    padding-top:     1em;
 }
 
 .navigation {
@@ -161,6 +162,25 @@ nav a:hover {
     border-bottom-right-radius: 5px;
 }
 
+/* Tags */
+
+#tags a {
+    float:         left;
+    color:         var(--base04);
+    background:    var(--base02);
+    font-weight:   bold;
+    padding:       5px;
+    display:       block;
+    font-size:     16pt;
+    border-radius: 5px;
+    margin:        5px;
+}
+
+#tags a:hover {
+    color:      var(--base02);
+    background: var(--base04);
+}
+
 /* Defaults */
 h1 {
     color:           var(--base0D);
@@ -170,6 +190,7 @@ h1 {
     margin-left:     1em;
     margin-top:      1em;
     margin-bottom:   0.5em;
+    clear:           both;
 }
 
 h2 {

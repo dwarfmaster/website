@@ -5,8 +5,9 @@ $partial("templates/post-list.html")$
 
 <h1>Tags</h1>
 
+<div id="tags">
 $for(tagsL)$
-<h2>$title$</h2>
-$partial("templates/post-list.html")$
+    <a href=$url$>$title$</a>
 $endfor$
+</div>
 
