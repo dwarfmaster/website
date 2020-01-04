@@ -1,9 +1,0 @@
-
-<p>
-    <a href="https://www.gnu.org/software/hurd/microkernel/mach">GNU Mach
-    is the microkernel developed for the Hurd system. It is a free (as in free
-    speech) working microkernel. Despite its power, it is not very used and
-    thus the documentation is lacking. This article aims to cover the principles
-    of the mach kernel, and some of its API, to ease the development of any
-    mach based system.
-

@@ -1,13 +1,9 @@
 website
 =======
 
-The code for my website (Haskell Yesod).
+The code for my website, using Hakyll.
 
-Articles are directly written in hamlet (with a preprocessing with m4) in this
-tree. The sources can be found in the `haskell` directory.
-
-An old ruby version using Mysql as its database and txt2tags to parse the
-markdown format for articles is in the `ruby` directory.
-
-An old version using perl and Xapian can be found under the `perl` directory.
+It's the 4th version of the website. There have been, in this order, a perl
+version, a ruby version, and a haskell Yesod version. You can find the code of
+these version using the tags `perl`, `ruby` and `yesod`.
 

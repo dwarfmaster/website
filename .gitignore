@@ -1,8 +1,7 @@
 *~
-dist
-*.aes
-*/_cache
-*/_site
-*/dist*
-*/.ghc*
+_cache
+_site
+dist*
+.ghc*
+.nix*
 
