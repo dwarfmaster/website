@@ -1,0 +1,15 @@
+
+<h2> This is a title
+
+<h3> And this is a subtitle.
+
+<p>Oh, look, content !!
+
+<div class="figure">
+    <img class="picture" src=@{ArticleDataR "article1" "logo.svg"}>
+    <p class="label"> A beautiful picture
+
+<p>
+    By the way, the other article is <a href=@{ArticleR "article2"}>there</a> (about something,
+    I forgot what), and this is <a href=@{HomeR}>home</a>.
+
