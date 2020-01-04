@@ -20,10 +20,10 @@ main = hakyll $ do
     match "about.md" $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= loadAndApplyTemplate defaultTemplate defaultContext
             >>= relativizeUrls
 
-    tags <- buildTags "articles/*" (fromCapture "tags/*.html")
+    tags <- buildTags articlesPat (fromCapture "tags/*.html")
 
     tagsRules tags $ \tag pat -> do
         route idRoute
@@ -34,21 +34,21 @@ main = hakyll $ do
                 titleField = constField "title" ("Posts tagged \""++tag++"\"")
                 indexCtx = articlesField <> titleField <> defaultContext
             makeItem "" >>= loadAndApplyTemplate "templates/tag.html" indexCtx
-                        >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                        >>= loadAndApplyTemplate defaultTemplate indexCtx
                         >>= relativizeUrls
 
-    match "articles/*" $ do
+    match articlesPat $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/article.html" (postCtxWithTags tags)
             >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
+            >>= loadAndApplyTemplate defaultTemplate (postCtxWithTags tags)
             >>= relativizeUrls
 
     create ["blog.html"] $ do
         route idRoute
         compile $ do
-            articles <- recentFirst =<< loadAll "articles/*"
+            articles <- recentFirst =<< loadAll articlesPat
             let archiveCtx =
                     listField "articles" (postCtxWithTags tags) (return articles)
                  <> constField "title" "Archive"
@@ -57,30 +57,34 @@ main = hakyll $ do
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= loadAndApplyTemplate defaultTemplate archiveCtx
                 >>= relativizeUrls
 
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = (postCtxWithTags tags) `mappend` bodyField "description"
-            articles <- take 10 <$> (recentFirst =<< loadAllSnapshots "articles/*" "content")
+            let feedCtx = (postCtxWithTags tags) <> bodyField "description"
+            articles <- take 10 <$> (recentFirst =<< loadAllSnapshots articlesPat "content")
             renderAtom feedConfiguration feedCtx articles
 
     match "index.html" $ do
         route idRoute
         compile $ do
-            articles <- take 5 <$> (recentFirst =<< loadAll "articles/*")
+            articles <- take 5 <$> (recentFirst =<< loadAll articlesPat)
             let indexCtx =
                     listField "articles" (postCtxWithTags tags) (return articles) `mappend`
                     defaultContext
 
             getResourceBody
                 >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= loadAndApplyTemplate defaultTemplate indexCtx
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateBodyCompiler
+ where articlesPat :: Pattern
+       articlesPat = "articles/*"
+       defaultTemplate :: Identifier
+       defaultTemplate = "templates/default.html"
 
 
 --------------------------------------------------------------------------------
