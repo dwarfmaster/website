@@ -1,16 +1,14 @@
 ---
 title: Construction of the free group in coq
-date: January 25, 2020
+date: February 9, 2020
 tags: mathematics, coq
 ...
 
 $$
-
 \newcommand\G{\mathscr{G}}
 \newcommand\hom{\text{Hom}}
 \newcommand\M{\mathscr{M}}
 \newcommand\bet{\rightarrow}
-
 $$
 
 
@@ -68,7 +66,6 @@ monoid and group morphism by monoid morphism.
 Let's formalize that in Coq. First we need to define a monoid structure :
 
 ```Coq
-
 Record Monoid : Type := mkMon {
     type          : Type;
     op            : type -> type -> type;
@@ -90,7 +87,6 @@ Record MonoidMorphism (M M' : Monoid) : Type := mkMonMorphism {
 Now we can define the proposition that tells us what a free monoid is :
 
 ```Coq
-
 Definition is_free_monoid_over (T : Type) (M : Monoid) : Prop :=
     forall (M' : Monoid),
       exists (F : (T -> type M') -> MonoidMorphism M M'),
@@ -110,7 +106,6 @@ You can also find the formalised proof in the coq file, for the following
 definition of free monoid over a type :
 
 ```Coq
-
 Inductive FreeMonT (T : Type) : Type
     := App : T -> FreeMonT T -> FreeMonT T
     | Empty : FreeMonT T
@@ -136,7 +131,6 @@ Now let $M$ be $\M(X\uplus X^{-1})$ the free monoid over our initial set and the
 formal inverses. Here is how to implement something like that in coq :
 
 ```Coq
-
 Inductive WithInv (T : Type) : Type
     := Reg    : T -> WithInv T
     |  ForInv : T -> WithInv T
@@ -170,7 +164,6 @@ easier to manipulate : given a word, either the redex is at the start, or we
 reduce the tail of the word. It gives the following definition :
 
 ```Coq
-
 Inductive Reduction (T : Type) : FreeMonT (WithInv T) -> FreeMonT (WithInv T) -> Prop
     := LeftRed  : forall (x : T), forall (tl : FreeMonT (WithInv T)),
                   Reduction T (App (WithInv T) (ForInv T x) (App (WithInv T) (Reg T x) tl)) tl
@@ -204,7 +197,6 @@ normalizing if and only if $\preceq$ is
 just use the well founded module in Coq to get our definition :
 
 ```Coq
-
 Definition Inv (T : Type) (R : T -> T -> Prop) : T -> T -> Prop
     := fun (x y : T) => R y x.
 
@@ -221,7 +213,6 @@ the natural with usual order. The fact that they are well founded is proved in
 the Coq standard library, so we use that to conclude.
 
 ```Coq
-
 Definition monotome_morphism (T T' : Type) (R : T -> T -> Prop)
         (R' : T' -> T' -> Prop) (f : T -> T') : Prop :=
     forall (x y : T), R x y -> R' (f x) (f y).
@@ -259,7 +250,6 @@ specific case the two cases where $\omega_1\rightarrow\omega_2$ or vice-versa
 never happen) :
 
 ```Coq
-
 Definition strongly_confluent (T : Type) (R : T -> T -> Prop) : Prop
      := forall (a b c : T), R a b -> R a c
           -> (b = c) \/ (R b c) \/ (R c b) \/ (exists (d : T), R b d /\ R c d).
@@ -289,7 +279,6 @@ words of the form $xx^{-1}$ or $x^{-1}x$ *stable*, and show it is equivalent to
 being normal for the reduction) :
 
 ```Coq
-
 Definition normal_form { T : Type } (R : T -> T -> Prop) (x : T) : Prop
     := forall (y : T), R x y -> False.
 
@@ -316,7 +305,6 @@ would automatically have if we had assumed the excluded middle.
 Here is the definition of the function, and the theorem proving it is correct :
 
 ```Coq
-
 Fixpoint liftEq { T : Type } (deceq : T -> T -> bool) (x y : WithInv T) : bool
     := match x, y with
      | Reg    _ a, Reg    _ b => deceq a b
@@ -352,7 +340,6 @@ coq is (where `trefl_closure` is the reflexive transitive closure of the
 relation) :
 
 ```Coq
-
 Theorem reduction_compatible_append (T : Type) :
     forall (a b c d : FreeMonT (WithInv T)),
         trefl_closure (Reduction T) a c -> trefl_closure (Reduction T) b d
@@ -367,7 +354,6 @@ elements, the normal form. So we can define the type of elements that are in
 normal form, and that will be our quotient. 
 
 ```Coq
-
 Record FreeGrpT (T : Type) : Type := mkFreeGrp {
     elem       : FreeMonT (WithInv T);
     elemNormal : is_stable elem;
@@ -387,7 +373,6 @@ of homotopy type theory is not good enough to make use of that yet. So instead I
 just added an axiom for that specific case.
 
 ```Coq
-
 Axiom eq_freegrp: forall (T : Type), forall (a b : FreeGrpT T), elem T a = elem T b -> a = b.
 
 ```
