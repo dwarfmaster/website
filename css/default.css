@@ -228,13 +228,24 @@ a:hover {
     color: var(--base09);
 }
 
-code, pre {
+:not(pre) > code {
     background:  var(--base07);
     color:       var(--base01);
     font:        monospace;
     font-size:   14pt;
     font-weight: normal;
     font-style:  normal;
+}
+
+pre {
+    background:    var(--base01);
+    font:          monospace;
+    font-size:     14pt;
+    margin-top:    1em;
+    margin-bottom: 1em;
+    padding:       10px;
+    border-radius: 10px;
+    overflow-x:    scroll;
 }
 
 figure {
