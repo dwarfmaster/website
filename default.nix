@@ -1,11 +1,11 @@
-{ mkDerivation, base, hakyll, stdenv }:
+{ mkDerivation, base, containers, hakyll, pandoc, stdenv }:
 mkDerivation {
   pname = "dwarfmaster-website";
   version = "0.1.0.0";
   src = ./.;
   isLibrary = false;
   isExecutable = true;
-  executableHaskellDepends = [ base hakyll ];
+  executableHaskellDepends = [ base containers hakyll pandoc ];
   license = "unknown";
   hydraPlatforms = stdenv.lib.platforms.none;
   
